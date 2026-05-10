@@ -2,6 +2,9 @@
   "name": "one-click-deploy",
   "version": "0.1.0",
   "private": true,
+  "overrides": {
+    "graphql": "16.9.0"
+  },
   "scripts": {
     "dev:server": "ts-node ./src/index.ts",
     "dev:worker": "ts-node ./src/index-worker.ts",
