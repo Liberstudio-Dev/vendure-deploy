@@ -4,6 +4,6 @@ WORKDIR /usr/src/app
 
 COPY package.json ./
 COPY package-lock.json ./
-RUN npm install
+RUN npm install --production
 COPY . .
 RUN npm run build
