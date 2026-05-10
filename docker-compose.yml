@@ -31,7 +31,7 @@ services:
   database:
     image: postgres
     volumes:
-      - /var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/
     ports:
       - 5432:5432
     environment:
@@ -48,3 +48,8 @@ services:
 networks:
   dokploy-network:
     external: true
+
+volumes:
+  postgres_data:
+
+  
