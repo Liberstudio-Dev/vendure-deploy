@@ -13,9 +13,9 @@ services:
     environment:
       DB_HOST: database
       DB_PORT: 5432
-      DB_NAME: ${POSTGRES_DB}
-      DB_USERNAME: ${POSTGRES_USER}
-      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
       COOKIE_SECRET: ${COOKIE_SECRET}
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:3001/health || exit 1"]
@@ -37,21 +37,23 @@ services:
     environment:
       DB_HOST: database
       DB_PORT: 5432
-      DB_NAME: ${POSTGRES_DB}
-      DB_USERNAME: ${POSTGRES_USER}
-      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
       COOKIE_SECRET: ${COOKIE_SECRET}
 
   database:
-    image: postgres
+    image: postgres:16-alpine
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_db_data:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - 6543:5432
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    labels:
+      - "io.vendure.create.name=vendure-one-click"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
       interval: 10s
@@ -64,4 +66,7 @@ networks:
     external: true
 
 volumes:
-  postgres_data:
+  postgres_db_data:
+    driver: local
+    labels:
+      - "io.vendure.create.name=vendure-cellini"
