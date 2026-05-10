@@ -2,16 +2,13 @@
   "name": "one-click-deploy",
   "version": "0.1.0",
   "private": true,
-  "overrides": {
-    "graphql": "16.9.0"
-  },
   "scripts": {
     "dev:server": "ts-node ./src/index.ts",
     "dev:worker": "ts-node ./src/index-worker.ts",
     "dev": "concurrently yarn:dev:*",
     "build": "npm run build:server && npm run build:dashboard",
     "build:server": "tsc",
-    "build:dashboard": "npx vite build",
+    "build:dashboard": "vite build",
     "start:prod": "node ./dist/index.js",
     "start:server": "node ./dist/index.js",
     "start:worker": "node ./dist/index-worker.js",
@@ -23,8 +20,7 @@
     "@vendure/dashboard": "3.6.3",
     "@vendure/email-plugin": "3.6.3",
     "@vendure/graphiql-plugin": "3.6.3",
-    "@vendure/harden-plugin": "^3.6.3",
-    "@vendure/create": "^2.2.0",
+    "@vendure/harden-plugin": "3.6.3",
     "dotenv": "16.3.1",
     "pg": "8.11.5"
   },
@@ -32,6 +28,7 @@
     "@vendure/cli": "3.6.3",
     "concurrently": "9.2.1",
     "ts-node": "10.9.2",
-    "typescript": "5.8.2"
+    "typescript": "5.8.2",
+    "vite": "^5.0.0"
   }
 }
