@@ -12,15 +12,12 @@
     "start": "concurrently yarn:start:*"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.554.0",
-    "@aws-sdk/lib-storage": "^3.554.0",
     "@vendure/asset-server-plugin": "3.6.3",
     "@vendure/core": "3.6.3",
     "@vendure/dashboard": "3.6.3",
     "@vendure/email-plugin": "3.6.3",
     "@vendure/graphiql-plugin": "3.6.3",
     "@vendure/harden-plugin": "^3.6.3",
-    "@vendure/admin-ui-plugin": "^2.2.0",
     "@vendure/create": "^2.2.0",
     "dotenv": "16.3.1",
     "pg": "8.11.5"
