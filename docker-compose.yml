@@ -35,5 +35,5 @@ services:
     ports:
       - 5432:5432
     environment:
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: Ai3xHFHnTTC5VrgLqB4Y
       POSTGRES_DB: vendure
