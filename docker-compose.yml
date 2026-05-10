@@ -1,4 +1,4 @@
-version: "3"
+version: "3.8"
 services:
   server:
     build:
@@ -7,31 +7,45 @@ services:
     ports:
       - 3001:3001
     command: ["yarn", "start:server"]
-    volumes:
-      - /usr/src/app
+    depends_on:
+      database:
+        condition: service_healthy
     environment:
       DB_HOST: database
       DB_PORT: 5432
       DB_NAME: ${POSTGRES_DB}
       DB_USERNAME: ${POSTGRES_USER}
       DB_PASSWORD: ${POSTGRES_PASSWORD}
+      COOKIE_SECRET: ${COOKIE_SECRET}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3001/health || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
   worker:
     build:
       context: .
       dockerfile: Dockerfile
     command: ["yarn", "start:worker"]
-    volumes:
-      - /usr/src/app
+    depends_on:
+      database:
+        condition: service_healthy
+      server:
+        condition: service_healthy
     environment:
       DB_HOST: database
       DB_PORT: 5432
       DB_NAME: ${POSTGRES_DB}
       DB_USERNAME: ${POSTGRES_USER}
       DB_PASSWORD: ${POSTGRES_PASSWORD}
+      COOKIE_SECRET: ${COOKIE_SECRET}
+
   database:
     image: postgres
     volumes:
-      - postgres_data:/var/lib/postgresql/
+      - postgres_data:/var/lib/postgresql/data
     ports:
       - 5432:5432
     environment:
@@ -51,5 +65,3 @@ networks:
 
 volumes:
   postgres_data:
-
-  
